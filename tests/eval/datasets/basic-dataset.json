@@ -1,0 +1,26 @@
+{
+  "eval_cases": [
+    {
+      "eval_case_id": "stickman_action_clip",
+      "prompt": {
+        "role": "user",
+        "parts": [
+          {
+            "text": "Create a 4-panel action stickman storyboard for characters Stick-Bob and Ninja-Dot starting in a futuristic neon rooftop at night."
+          }
+        ]
+      }
+    },
+    {
+      "eval_case_id": "stickman_moral_science_clip",
+      "prompt": {
+        "role": "user",
+        "parts": [
+          {
+            "text": "Create a 3-panel moral science story clip featuring Stick-Sam and Stick-Tim about sharing toys at the playground."
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,913 @@
+{
+  "eval_cases": [
+    {
+      "prompt": {
+        "parts": [
+          {
+            "text": "Create a 4-panel action stickman storyboard for characters Stick-Bob and Ninja-Dot starting in a futuristic neon rooftop at night."
+          }
+        ],
+        "role": "user"
+      },
+      "responses": [
+        {
+          "response": {
+            "parts": [
+              {
+                "text": "# 🎬 Action Stickman Storyboard Script\n\n**Clip Title:** *Neon Duel: Stick-Bob vs. Ninja-Dot*  \n**Genre:** Cyberpunk Action  \n**Environment:** Futuristic Neon Rooftop at Night (Rainy, High-Contrast Cyan & Magenta Lights)  \n**Characters:** Stick-Bob, Ninja-Dot  \n\n---\n\n## ⏱️ Technical Timing & Production Specs\n* **Total Pacing:** Fast Action (2.0 sec / panel)\n* **Total Clip Duration:** 8.0 Seconds\n* **Frame Counts:** \n  * @ 24 fps: **192 frames**\n  * @ 30 fps: **240 frames**\n* **Render Style:** 2D Minimalist Stickman Action Vector Art, High Contrast, Dynamic Speed Lines\n\n---\n\n## 🖼️ Panel Breakdown\n\n### 📍 Panel 1: Neon Rooftop Standoff\n* **Camera Framing:** Wide Shot\n* **Action Description:** Stick-Bob stands dramatically under a glowing cyan neon sign while Ninja-Dot drops down silently from a higher ledge onto the rain-slicked rooftop.\n* **Stickman Poses:**\n  * **Stick-Bob:** Standing ready, fists clenched, cyan glow highlighting stick figure frame.\n  * **Ninja-Dot:** Crouched 3-point superhero landing on ledge, dual katana stick handles drawn.\n* **Visual Prompt:**  \n  `Black line stickman art, futuristic neon rooftop at night, glowing cyberpunk blue and magenta lights, dark rainy background, Stick-Bob ready posture vs Ninja-Dot crouched ninja landing, minimalist high contrast stickman visual.`\n\n---\n\n### 📍 Panel 2: High-Flying Clash\n* **Camera Framing:** Medium Close-Up Shot\n* **Action Description:** Ninja-Dot leaps forward executing a spinning kick while Stick-Bob blocks with a glowing energetic shield staff.\n* **Stickman Poses:**\n  * **Ninja-Dot:** Mid-air horizontal dynamic spin kick, motion trail trailing behind.\n  * **Stick-Bob:** Braced low stance, holding dual-ended neon staff overhead blocking the kick.\n* **Visual Prompt:**  \n  `Action frame stick figure animation, mid-air mid-kick stickman Ninja-Dot, blocking stick figure Stick-Bob with glowing neon staff, spark effects, dynamic motion blur, high action cyberpunk background.`\n\n---\n\n### 📍 Panel 3: Billboard Wall-Run Counter\n* **Camera Framing:** Dynamic Low-Angle Wide Shot\n* **Action Description:** Stick-Bob sweeps Ninja-Dot's legs, but Ninja-Dot executes a lightning-fast wall-run off a giant holographic billboard to counter.\n* **Stickman Poses:**\n  * **Stick-Bob:** Low leg sweep pose with staff, head turned upward following opponent.\n  * **Ninja-Dot:** Wall-running horizontally across a holographic neon billboard, ready to spring off.\n* **Visual Prompt:**  \n  `Dynamic low-angle wide camera shot, stick figure wall running on holographic neon billboard, lower stick figure executing a sweep kick, glowing rain streaks, high-energy action camera angle.`\n\n---\n\n### 📍 Panel 4: Energy Climax Collision\n* **Camera Framing:** Dynamic High-Impact Climax Shot\n* **Action Description:** Ninja-Dot dives off the billboard with dual katanas crossed, while Stick-Bob unleashes a full neon energy burst from his staff in an epic collision climax.\n* **Stickman Poses:**\n  * **Ninja-Dot:** Downward dive strike with twin neon katanas crossed in an X shape.\n  * **Stick-Bob:** Upward thrust stance launching a glowing shockwave sphere from staff.\n* **Visual Prompt:**  \n  `Climactic battle explosion panel, minimalist black stickmen colliding in mid-air shockwave, bright neon cyan and magenta energy shockwaves, high contrast lighting, epic dramatic finish frame.`"
+              }
+            ],
+            "role": "model"
+          }
+        }
+      ],
+      "eval_case_id": "stickman_action_clip",
+      "agent_data": {
+        "agents": {
+          "agent_stickman": {
+            "agent_id": "agent_stickman",
+            "agent_type": "LlmAgent",
+            "description": "",
+            "instruction": "\nYou are Agent_StickMan, an expert AI Director and Storyboard Creator specialized in short animated clips using stickman action figures.\n\nYour goal is to turn character names, starting scenes, and story types (action, moral science, futuristic, comedy, etc.) into dynamic, production-ready stickman storyboards!\n\nFollow this workflow when creating a story clip:\n1. Extract or ask for:\n   - Stickman character names\n   - Starting scene / environment\n   - Story type / genre\n2. Call `generate_storyboard_script` to create a panel-by-panel script outline.\n3. Call `render_stickman_panel` for key panels to define stickman character poses, camera angles, and visual prompt descriptions.\n4. Call `calculate_clip_duration` to calculate exact clip timing in seconds and total frame counts (24fps / 30fps).\n5. Present the full visual storyboard in clean markdown with scene titles, stickman action poses, camera directions, and timing specs!\n",
+            "tools": [
+              {
+                "function_declarations": [
+                  {
+                    "description": "Generate a structured multi-panel storyboard script outline.\n\nArgs:\n    characters: Names of the stickman characters (e.g. ['Stick-Bob', 'Ninja-Dot']).\n    starting_scene: Description of the opening scene/environment.\n    story_type: Genre of the clip (e.g. 'action', 'moral science', 'futuristic', 'comedy').\n    num_panels: Number of storyboard panels to generate (default 4).\n\nReturns:\n    A dictionary containing the clip metadata, character list, and panel breakdown.",
+                    "name": "generate_storyboard_script",
+                    "parameters_json_schema": {
+                      "properties": {
+                        "characters": {
+                          "items": {
+                            "type": "string"
+                          },
+                          "title": "Characters",
+                          "type": "array"
+                        },
+                        "starting_scene": {
+                          "title": "Starting Scene",
+                          "type": "string"
+                        },
+                        "story_type": {
+                          "title": "Story Type",
+                          "type": "string"
+                        },
+                        "num_panels": {
+                          "default": 4,
+                          "title": "Num Panels",
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "characters",
+                        "starting_scene",
+                        "story_type"
+                      ],
+                      "title": "generate_storyboard_scriptParams",
+                      "type": "object"
+                    },
+                    "response_json_schema": {
+                      "additionalProperties": true,
+                      "type": "object"
+                    }
+                  }
+                ]
+              },
+              {
+                "function_declarations": [
+                  {
+                    "description": "Prepare keyframe panel concepts and visual stickman art prompts.\n\nArgs:\n    panel_number: Sequence number of the panel (1-indexed).\n    scene_title: Short title for the scene panel.\n    action_description: Description of the action occurring in the frame.\n    stickman_poses: List of character poses e.g. [{'character': 'Stick-Bob', 'pose': 'high kick'}, {'character': 'Ninja-Dot', 'pose': 'backflip dodge'}].\n    visual_prompt: Detailed prompt for stickman image generation.\n\nReturns:\n    A dictionary with rendered panel keyframe specs.",
+                    "name": "render_stickman_panel",
+                    "parameters_json_schema": {
+                      "properties": {
+                        "panel_number": {
+                          "title": "Panel Number",
+                          "type": "integer"
+                        },
+                        "scene_title": {
+                          "title": "Scene Title",
+                          "type": "string"
+                        },
+                        "action_description": {
+                          "title": "Action Description",
+                          "type": "string"
+                        },
+                        "stickman_poses": {
+                          "items": {
+                            "additionalProperties": {
+                              "type": "string"
+                            },
+                            "type": "object"
+                          },
+                          "title": "Stickman Poses",
+                          "type": "array"
+                        },
+                        "visual_prompt": {
+                          "title": "Visual Prompt",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "panel_number",
+                        "scene_title",
+                        "action_description",
+                        "stickman_poses",
+                        "visual_prompt"
+                      ],
+                      "title": "render_stickman_panelParams",
+                      "type": "object"
+                    },
+                    "response_json_schema": {
+                      "additionalProperties": true,
+                      "type": "object"
+                    }
+                  }
+                ]
+              },
+              {
+                "function_declarations": [
+                  {
+                    "description": "Calculate clip duration in seconds, frame count, and timing pacing.\n\nArgs:\n    num_panels: Total number of storyboard panels.\n    pacing: Action pacing - 'slow' (5s/panel), 'normal' (3.5s/panel), 'fast' (2s/panel).\n\nReturns:\n    A dictionary with timing details and FPS calculation.",
+                    "name": "calculate_clip_duration",
+                    "parameters_json_schema": {
+                      "properties": {
+                        "num_panels": {
+                          "title": "Num Panels",
+                          "type": "integer"
+                        },
+                        "pacing": {
+                          "default": "normal",
+                          "title": "Pacing",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "num_panels"
+                      ],
+                      "title": "calculate_clip_durationParams",
+                      "type": "object"
+                    },
+                    "response_json_schema": {
+                      "additionalProperties": true,
+                      "type": "object"
+                    }
+                  }
+                ]
+              }
+            ],
+            "sub_agents": []
+          }
+        },
+        "turns": [
+          {
+            "turn_index": 0,
+            "turn_id": "turn_0",
+            "events": [
+              {
+                "author": "agent_stickman",
+                "content": {
+                  "parts": [
+                    {
+                      "function_call": {
+                        "id": "call_988736",
+                        "args": {
+                          "characters": [
+                            "Stick-Bob",
+                            "Ninja-Dot"
+                          ],
+                          "starting_scene": "Futuristic neon rooftop at night",
+                          "story_type": "action",
+                          "num_panels": 4
+                        },
+                        "name": "generate_storyboard_script"
+                      }
+                    }
+                  ],
+                  "role": "model"
+                }
+              },
+              {
+                "author": "agent_stickman",
+                "content": {
+                  "parts": [
+                    {
+                      "function_response": {
+                        "id": "call_988736",
+                        "name": "generate_storyboard_script",
+                        "response": {
+                          "status": "success",
+                          "clip_title": "Action Clip featuring Stick-Bob, Ninja-Dot",
+                          "story_type": "action",
+                          "starting_scene": "Futuristic neon rooftop at night",
+                          "characters": [
+                            "Stick-Bob",
+                            "Ninja-Dot"
+                          ],
+                          "total_panels": 4,
+                          "script_outline": [
+                            {
+                              "panel_number": 1,
+                              "scene_title": "Panel 1: Establishing Shot — Futuristic neon rooftop at nig...",
+                              "camera_framing": "Wide Shot",
+                              "action_description": "Introduction of Stick-Bob, Ninja-Dot in Futuristic neon rooftop at night. Poses are established.",
+                              "recommended_pacing_sec": 3.5
+                            },
+                            {
+                              "panel_number": 2,
+                              "scene_title": "Panel 2: Escalation & Action",
+                              "camera_framing": "Medium Close-Up Shot",
+                              "action_description": "Conflict builds between Stick-Bob, Ninja-Dot. Dynamic motion and stickman martial/action poses.",
+                              "recommended_pacing_sec": 3.5
+                            },
+                            {
+                              "panel_number": 3,
+                              "scene_title": "Panel 3: Escalation & Action",
+                              "camera_framing": "Medium Close-Up Shot",
+                              "action_description": "Conflict builds between Stick-Bob, Ninja-Dot. Dynamic motion and stickman martial/action poses.",
+                              "recommended_pacing_sec": 3.5
+                            },
+                            {
+                              "panel_number": 4,
+                              "scene_title": "Panel 4: Climax / Resolution",
+                              "camera_framing": "Dynamic Low-Angle Shot",
+                              "action_description": "Final action climax for Stick-Bob, Ninja-Dot. Lesson or conclusion of the action narrative.",
+                              "recommended_pacing_sec": 3.5
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ],
+                  "role": "user"
+                }
+              },
+              {
+                "author": "agent_stickman",
+                "content": {
+                  "parts": [
+                    {
+                      "function_call": {
+                        "id": "call_884827",
+                        "args": {
+                          "action_description": "Stick-Bob stands dramatically under a glowing cyan neon sign while Ninja-Dot drops down silently from a higher ledge onto the rain-slicked futuristic rooftop.",
+                          "panel_number": 1,
+                          "scene_title": "Panel 1: Neon Rooftop Standoff",
+                          "stickman_poses": [
+                            {
+                              "character": "Stick-Bob",
+                              "pose": "Standing ready, fists clenched, cyan glow highlighting stick figure frame"
+                            },
+                            {
+                              "character": "Ninja-Dot",
+                              "pose": "Crouched 3-point superhero landing on ledge, dual katana stick handles drawn"
+                            }
+                          ],
+                          "visual_prompt": "Black line stickman art, futuristic neon rooftop at night, glowing cyberpunk blue and magenta lights, dark rainy background, Stick-Bob ready posture vs Ninja-Dot crouched ninja landing, minimalist high contrast stickman visual."
+                        },
+                        "name": "render_stickman_panel"
+                      }
+                    },
+                    {
+                      "function_call": {
+                        "id": "call_884828",
+                        "args": {
+                          "stickman_poses": [
+                            {
+                              "character": "Ninja-Dot",
+                              "pose": "Mid-air horizontal dynamic spin kick, motion trail trailing behind"
+                            },
+                            {
+                              "pose": "Braced low stance, holding dual-ended neon staff overhead blocking the kick",
+                              "character": "Stick-Bob"
+                            }
+                          ],
+                          "scene_title": "Panel 2: High-Flying Clash",
+                          "visual_prompt": "Action frame stick figure animation, mid-air mid-kick stickman Ninja-Dot, blocking stick figure Stick-Bob with glowing neon staff, spark effects, dynamic motion blur, high action cyberpunk background.",
+                          "action_description": "Ninja-Dot leaps forward executing a spinning kick while Stick-Bob blocks with a glowing energetic shield staff.",
+                          "panel_number": 2
+                        },
+                        "name": "render_stickman_panel"
+                      }
+                    },
+                    {
+                      "function_call": {
+                        "id": "call_884829",
+                        "args": {
+                          "stickman_poses": [
+                            {
+                              "character": "Stick-Bob",
+                              "pose": "Low leg sweep pose with staff, head turned upward following opponent"
+                            },
+                            {
+                              "pose": "Wall-running horizontally across a holographic neon billboard, ready to spring off",
+                              "character": "Ninja-Dot"
+                            }
+                          ],
+                          "action_description": "Stick-Bob sweeps Ninja-Dot's legs, but Ninja-Dot executes a lightning-fast wall-run off a giant neon billboard to counter.",
+                          "panel_number": 3,
+                          "visual_prompt": "Dynamic low-angle wide camera shot, stick figure wall running on holographic neon billboard, lower stick figure executing a sweep kick, glowing rain streaks, high-energy action camera angle.",
+                          "scene_title": "Panel 3: Billboard Wall-Run Counter"
+                        },
+                        "name": "render_stickman_panel"
+                      }
+                    },
+                    {
+                      "function_call": {
+                        "id": "call_884830",
+                        "args": {
+                          "action_description": "Ninja-Dot dives off the billboard with dual katanas crossed, while Stick-Bob unleashes a full neon energy burst from his staff in a epic collision climax.",
+                          "stickman_poses": [
+                            {
+                              "pose": "Downward dive strike with twin neon katanas crossed in an X shape",
+                              "character": "Ninja-Dot"
+                            },
+                            {
+                              "pose": "Upward thrust stance launching a glowing shockwave sphere from staff",
+                              "character": "Stick-Bob"
+                            }
+                          ],
+                          "panel_number": 4,
+                          "scene_title": "Panel 4: Energy Climax Collision",
+                          "visual_prompt": "Climactic battle explosion panel, minimalist black stickmen colliding in mid-air shockwave, bright neon cyan and magenta energy shockwaves, high contrast lighting, epic dramatic finish frame."
+                        },
+                        "name": "render_stickman_panel"
+                      }
+                    },
+                    {
+                      "function_call": {
+                        "id": "call_884831",
+                        "args": {
+                          "pacing": "fast",
+                          "num_panels": 4
+                        },
+                        "name": "calculate_clip_duration"
+                      }
+                    }
+                  ],
+                  "role": "model"
+                }
+              },
+              {
+                "author": "agent_stickman",
+                "content": {
+                  "parts": [
+                    {
+                      "function_response": {
+                        "id": "call_884827",
+                        "name": "render_stickman_panel",
+                        "response": {
+                          "status": "rendered",
+                          "panel_number": 1,
+                          "scene_title": "Panel 1: Neon Rooftop Standoff",
+                          "action_description": "Stick-Bob stands dramatically under a glowing cyan neon sign while Ninja-Dot drops down silently from a higher ledge onto the rain-slicked futuristic rooftop.",
+                          "stickman_poses": [
+                            {
+                              "character": "Stick-Bob",
+                              "pose": "Standing ready, fists clenched, cyan glow highlighting stick figure frame"
+                            },
+                            {
+                              "character": "Ninja-Dot",
+                              "pose": "Crouched 3-point superhero landing on ledge, dual katana stick handles drawn"
+                            }
+                          ],
+                          "visual_prompt": "Black line stickman art, futuristic neon rooftop at night, glowing cyberpunk blue and magenta lights, dark rainy background, Stick-Bob ready posture vs Ninja-Dot crouched ninja landing, minimalist high contrast stickman visual.",
+                          "render_style": "2D Minimalist Stickman Action Vector Art, High Contrast, Dynamic Speed Lines"
+                        }
+                      }
+                    },
+                    {
+                      "function_response": {
+                        "id": "call_884828",
+                        "name": "render_stickman_panel",
+                        "response": {
+                          "status": "rendered",
+                          "panel_number": 2,
+                          "scene_title": "Panel 2: High-Flying Clash",
+                          "action_description": "Ninja-Dot leaps forward executing a spinning kick while Stick-Bob blocks with a glowing energetic shield staff.",
+                          "stickman_poses": [
+                            {
+                              "character": "Ninja-Dot",
+                              "pose": "Mid-air horizontal dynamic spin kick, motion trail trailing behind"
+                            },
+                            {
+                              "pose": "Braced low stance, holding dual-ended neon staff overhead blocking the kick",
+                              "character": "Stick-Bob"
+                            }
+                          ],
+                          "visual_prompt": "Action frame stick figure animation, mid-air mid-kick stickman Ninja-Dot, blocking stick figure Stick-Bob with glowing neon staff, spark effects, dynamic motion blur, high action cyberpunk background.",
+                          "render_style": "2D Minimalist Stickman Action Vector Art, High Contrast, Dynamic Speed Lines"
+                        }
+                      }
+                    },
+                    {
+                      "function_response": {
+                        "id": "call_884829",
+                        "name": "render_stickman_panel",
+                        "response": {
+                          "status": "rendered",
+                          "panel_number": 3,
+                          "scene_title": "Panel 3: Billboard Wall-Run Counter",
+                          "action_description": "Stick-Bob sweeps Ninja-Dot's legs, but Ninja-Dot executes a lightning-fast wall-run off a giant neon billboard to counter.",
+                          "stickman_poses": [
+                            {
+                              "character": "Stick-Bob",
+                              "pose": "Low leg sweep pose with staff, head turned upward following opponent"
+                            },
+                            {
+                              "pose": "Wall-running horizontally across a holographic neon billboard, ready to spring off",
+                              "character": "Ninja-Dot"
+                            }
+                          ],
+                          "visual_prompt": "Dynamic low-angle wide camera shot, stick figure wall running on holographic neon billboard, lower stick figure executing a sweep kick, glowing rain streaks, high-energy action camera angle.",
+                          "render_style": "2D Minimalist Stickman Action Vector Art, High Contrast, Dynamic Speed Lines"
+                        }
+                      }
+                    },
+                    {
+                      "function_response": {
+                        "id": "call_884830",
+                        "name": "render_stickman_panel",
+                        "response": {
+                          "status": "rendered",
+                          "panel_number": 4,
+                          "scene_title": "Panel 4: Energy Climax Collision",
+                          "action_description": "Ninja-Dot dives off the billboard with dual katanas crossed, while Stick-Bob unleashes a full neon energy burst from his staff in a epic collision climax.",
+                          "stickman_poses": [
+                            {
+                              "pose": "Downward dive strike with twin neon katanas crossed in an X shape",
+                              "character": "Ninja-Dot"
+                            },
+                            {
+                              "pose": "Upward thrust stance launching a glowing shockwave sphere from staff",
+                              "character": "Stick-Bob"
+                            }
+                          ],
+                          "visual_prompt": "Climactic battle explosion panel, minimalist black stickmen colliding in mid-air shockwave, bright neon cyan and magenta energy shockwaves, high contrast lighting, epic dramatic finish frame.",
+                          "render_style": "2D Minimalist Stickman Action Vector Art, High Contrast, Dynamic Speed Lines"
+                        }
+                      }
+                    },
+                    {
+                      "function_response": {
+                        "id": "call_884831",
+                        "name": "calculate_clip_duration",
+                        "response": {
+                          "num_panels": 4,
+                          "pacing": "fast",
+                          "sec_per_panel": 2.0,
+                          "total_duration_seconds": 8.0,
+                          "total_frames_24fps": 192,
+                          "total_frames_30fps": 240
+                        }
+                      }
+                    }
+                  ],
+                  "role": "user"
+                }
+              },
+              {
+                "author": "agent_stickman",
+                "content": {
+                  "parts": [
+                    {
+                      "text": "# 🎬 Action Stickman Storyboard Script\n\n**Clip Title:** *Neon Duel: Stick-Bob vs. Ninja-Dot*  \n**Genre:** Cyberpunk Action  \n**Environment:** Futuristic Neon Rooftop at Night (Rainy, High-Contrast Cyan & Magenta Lights)  \n**Characters:** Stick-Bob, Ninja-Dot  \n\n---\n\n## ⏱️ Technical Timing & Production Specs\n* **Total Pacing:** Fast Action (2.0 sec / panel)\n* **Total Clip Duration:** 8.0 Seconds\n* **Frame Counts:** \n  * @ 24 fps: **192 frames**\n  * @ 30 fps: **240 frames**\n* **Render Style:** 2D Minimalist Stickman Action Vector Art, High Contrast, Dynamic Speed Lines\n\n---\n\n## 🖼️ Panel Breakdown\n\n### 📍 Panel 1: Neon Rooftop Standoff\n* **Camera Framing:** Wide Shot\n* **Action Description:** Stick-Bob stands dramatically under a glowing cyan neon sign while Ninja-Dot drops down silently from a higher ledge onto the rain-slicked rooftop.\n* **Stickman Poses:**\n  * **Stick-Bob:** Standing ready, fists clenched, cyan glow highlighting stick figure frame.\n  * **Ninja-Dot:** Crouched 3-point superhero landing on ledge, dual katana stick handles drawn.\n* **Visual Prompt:**  \n  `Black line stickman art, futuristic neon rooftop at night, glowing cyberpunk blue and magenta lights, dark rainy background, Stick-Bob ready posture vs Ninja-Dot crouched ninja landing, minimalist high contrast stickman visual.`\n\n---\n\n### 📍 Panel 2: High-Flying Clash\n* **Camera Framing:** Medium Close-Up Shot\n* **Action Description:** Ninja-Dot leaps forward executing a spinning kick while Stick-Bob blocks with a glowing energetic shield staff.\n* **Stickman Poses:**\n  * **Ninja-Dot:** Mid-air horizontal dynamic spin kick, motion trail trailing behind.\n  * **Stick-Bob:** Braced low stance, holding dual-ended neon staff overhead blocking the kick.\n* **Visual Prompt:**  \n  `Action frame stick figure animation, mid-air mid-kick stickman Ninja-Dot, blocking stick figure Stick-Bob with glowing neon staff, spark effects, dynamic motion blur, high action cyberpunk background.`\n\n---\n\n### 📍 Panel 3: Billboard Wall-Run Counter\n* **Camera Framing:** Dynamic Low-Angle Wide Shot\n* **Action Description:** Stick-Bob sweeps Ninja-Dot's legs, but Ninja-Dot executes a lightning-fast wall-run off a giant holographic billboard to counter.\n* **Stickman Poses:**\n  * **Stick-Bob:** Low leg sweep pose with staff, head turned upward following opponent.\n  * **Ninja-Dot:** Wall-running horizontally across a holographic neon billboard, ready to spring off.\n* **Visual Prompt:**  \n  `Dynamic low-angle wide camera shot, stick figure wall running on holographic neon billboard, lower stick figure executing a sweep kick, glowing rain streaks, high-energy action camera angle.`\n\n---\n\n### 📍 Panel 4: Energy Climax Collision\n* **Camera Framing:** Dynamic High-Impact Climax Shot\n* **Action Description:** Ninja-Dot dives off the billboard with dual katanas crossed, while Stick-Bob unleashes a full neon energy burst from his staff in an epic collision climax.\n* **Stickman Poses:**\n  * **Ninja-Dot:** Downward dive strike with twin neon katanas crossed in an X shape.\n  * **Stick-Bob:** Upward thrust stance launching a glowing shockwave sphere from staff.\n* **Visual Prompt:**  \n  `Climactic battle explosion panel, minimalist black stickmen colliding in mid-air shockwave, bright neon cyan and magenta energy shockwaves, high contrast lighting, epic dramatic finish frame.`"
+                    }
+                  ],
+                  "role": "model"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "prompt": {
+        "parts": [
+          {
+            "text": "Create a 3-panel moral science story clip featuring Stick-Sam and Stick-Tim about sharing toys at the playground."
+          }
+        ],
+        "role": "user"
+      },
+      "responses": [
+        {
+          "response": {
+            "parts": [
+              {
+                "text": "# 🎨 Animated Stickman Storyboard Script\n\n**Clip Title:** *The Power of Sharing*  \n**Genre:** Moral Science / Animated Short  \n**Characters:** Stick-Sam & Stick-Tim  \n**Setting:** Sunny Outdoor Playground (Sandbox & Slide)  \n**Total Duration:** 10.5 Seconds (252 frames @ 24 fps / 315 frames @ 30 fps)  \n**Pacing:** Normal (3.5s per panel)\n\n---\n\n## 🎬 Storyboard Panels Breakdown\n\n### 📍 Panel 1: The Greedy Playtime\n* **Camera Shot:** Wide Shot  \n* **Timing:** 0.0s – 3.5s (84 frames @ 24fps)  \n* **Action Description:** Stick-Sam holds a bright red toy truck tightly in the sandbox while Stick-Tim approaches with open arms, kindly asking to play together. Stick-Sam turns away, keeping the toy to himself.  \n* **Stickman Character Poses:**\n  * **Stick-Sam:** Clutching toy truck tightly to chest, torso turned away defensively.\n  * **Stick-Tim:** Reaching forward with open palm, head tilted in a sad/hopeful pose.\n* **Visual Prompt:**\n  > *\"Minimalist black stickman figures on a vibrant playground background. Stick-Sam clutches a bright red toy truck selfishly in the sandbox. Stick-Tim reaches out friendly, asking to share. Clean stick-figure aesthetic with clear emotional poses.\"*\n\n---\n\n### 📍 Panel 2: The Lonely Realization\n* **Camera Shot:** Medium Close-Up Shot / Split Focus  \n* **Timing:** 3.5s – 7.0s (84 frames @ 24fps)  \n* **Action Description:** Stick-Sam plays alone with the toy truck, slump-shouldered and bored. Meanwhile, Stick-Tim builds an awesome sandcastle nearby by himself. Stick-Sam realizes playing alone isn't as fun as playing together.  \n* **Stickman Character Poses:**\n  * **Stick-Sam:** Slumped shoulders, sitting isolated, looking down in regret.\n  * **Stick-Tim:** Joyful hands-up victory pose next to a fun sandcastle.\n* **Visual Prompt:**\n  > *\"Minimalist stick figure scene. Stick-Sam sits isolated with his toy truck looking down in regret. Stick-Tim is cheering proudly next to a sandcastle. Split focus showing contrast between greed and shared fun.\"*\n\n---\n\n### 📍 Panel 3: Sharing Brings Joy (Climax & Moral)\n* **Camera Shot:** Dynamic Low-Angle Shot  \n* **Timing:** 7.0s – 10.5s (84 frames @ 24fps)  \n* **Action Description:** Stick-Sam walks over and offers the toy truck to Stick-Tim. Together, they cheer and drive the truck up the sandcastle ramp!  \n* **Stickman Character Poses:**\n  * **Stick-Sam:** Extending arms forward, offering the toy truck with happy upright posture.\n  * **Stick-Tim:** Cheering high-five stance, accepting the toy with joy.\n* **Visual Prompt:**\n  > *\"Heartwarming stickman story conclusion. Stick-Sam hands the toy truck over to Stick-Tim at the sandcastle. Both stick figures have celebratory high-five arm poses, cheerful motion lines, sunny playground setting.\"*\n\n---\n\n## ⏱️ Clip Technical Specifications\n\n| Metric | Specification |\n| :--- | :--- |\n| **Total Panels** | 3 Panels |\n| **Total Clip Duration** | 10.5 Seconds |\n| **Frame Count (24 FPS)** | 252 Frames |\n| **Frame Count (30 FPS)** | 315 Frames |\n| **Pacing Rate** | 3.5 sec/panel (Normal pacing) |\n| **Moral Lesson** | *Sharing brings more happiness than keeping things to yourself!* |"
+              }
+            ],
+            "role": "model"
+          }
+        }
+      ],
+      "eval_case_id": "stickman_moral_science_clip",
+      "agent_data": {
+        "agents": {
+          "agent_stickman": {
+            "agent_id": "agent_stickman",
+            "agent_type": "LlmAgent",
+            "description": "",
+            "instruction": "\nYou are Agent_StickMan, an expert AI Director and Storyboard Creator specialized in short animated clips using stickman action figures.\n\nYour goal is to turn character names, starting scenes, and story types (action, moral science, futuristic, comedy, etc.) into dynamic, production-ready stickman storyboards!\n\nFollow this workflow when creating a story clip:\n1. Extract or ask for:\n   - Stickman character names\n   - Starting scene / environment\n   - Story type / genre\n2. Call `generate_storyboard_script` to create a panel-by-panel script outline.\n3. Call `render_stickman_panel` for key panels to define stickman character poses, camera angles, and visual prompt descriptions.\n4. Call `calculate_clip_duration` to calculate exact clip timing in seconds and total frame counts (24fps / 30fps).\n5. Present the full visual storyboard in clean markdown with scene titles, stickman action poses, camera directions, and timing specs!\n",
+            "tools": [
+              {
+                "function_declarations": [
+                  {
+                    "description": "Generate a structured multi-panel storyboard script outline.\n\nArgs:\n    characters: Names of the stickman characters (e.g. ['Stick-Bob', 'Ninja-Dot']).\n    starting_scene: Description of the opening scene/environment.\n    story_type: Genre of the clip (e.g. 'action', 'moral science', 'futuristic', 'comedy').\n    num_panels: Number of storyboard panels to generate (default 4).\n\nReturns:\n    A dictionary containing the clip metadata, character list, and panel breakdown.",
+                    "name": "generate_storyboard_script",
+                    "parameters_json_schema": {
+                      "properties": {
+                        "characters": {
+                          "items": {
+                            "type": "string"
+                          },
+                          "title": "Characters",
+                          "type": "array"
+                        },
+                        "starting_scene": {
+                          "title": "Starting Scene",
+                          "type": "string"
+                        },
+                        "story_type": {
+                          "title": "Story Type",
+                          "type": "string"
+                        },
+                        "num_panels": {
+                          "default": 4,
+                          "title": "Num Panels",
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "characters",
+                        "starting_scene",
+                        "story_type"
+                      ],
+                      "title": "generate_storyboard_scriptParams",
+                      "type": "object"
+                    },
+                    "response_json_schema": {
+                      "additionalProperties": true,
+                      "type": "object"
+                    }
+                  }
+                ]
+              },
+              {
+                "function_declarations": [
+                  {
+                    "description": "Prepare keyframe panel concepts and visual stickman art prompts.\n\nArgs:\n    panel_number: Sequence number of the panel (1-indexed).\n    scene_title: Short title for the scene panel.\n    action_description: Description of the action occurring in the frame.\n    stickman_poses: List of character poses e.g. [{'character': 'Stick-Bob', 'pose': 'high kick'}, {'character': 'Ninja-Dot', 'pose': 'backflip dodge'}].\n    visual_prompt: Detailed prompt for stickman image generation.\n\nReturns:\n    A dictionary with rendered panel keyframe specs.",
+                    "name": "render_stickman_panel",
+                    "parameters_json_schema": {
+                      "properties": {
+                        "panel_number": {
+                          "title": "Panel Number",
+                          "type": "integer"
+                        },
+                        "scene_title": {
+                          "title": "Scene Title",
+                          "type": "string"
+                        },
+                        "action_description": {
+                          "title": "Action Description",
+                          "type": "string"
+                        },
+                        "stickman_poses": {
+                          "items": {
+                            "additionalProperties": {
+                              "type": "string"
+                            },
+                            "type": "object"
+                          },
+                          "title": "Stickman Poses",
+                          "type": "array"
+                        },
+                        "visual_prompt": {
+                          "title": "Visual Prompt",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "panel_number",
+                        "scene_title",
+                        "action_description",
+                        "stickman_poses",
+                        "visual_prompt"
+                      ],
+                      "title": "render_stickman_panelParams",
+                      "type": "object"
+                    },
+                    "response_json_schema": {
+                      "additionalProperties": true,
+                      "type": "object"
+                    }
+                  }
+                ]
+              },
+              {
+                "function_declarations": [
+                  {
+                    "description": "Calculate clip duration in seconds, frame count, and timing pacing.\n\nArgs:\n    num_panels: Total number of storyboard panels.\n    pacing: Action pacing - 'slow' (5s/panel), 'normal' (3.5s/panel), 'fast' (2s/panel).\n\nReturns:\n    A dictionary with timing details and FPS calculation.",
+                    "name": "calculate_clip_duration",
+                    "parameters_json_schema": {
+                      "properties": {
+                        "num_panels": {
+                          "title": "Num Panels",
+                          "type": "integer"
+                        },
+                        "pacing": {
+                          "default": "normal",
+                          "title": "Pacing",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "num_panels"
+                      ],
+                      "title": "calculate_clip_durationParams",
+                      "type": "object"
+                    },
+                    "response_json_schema": {
+                      "additionalProperties": true,
+                      "type": "object"
+                    }
+                  }
+                ]
+              }
+            ],
+            "sub_agents": []
+          }
+        },
+        "turns": [
+          {
+            "turn_index": 0,
+            "turn_id": "turn_0",
+            "events": [
+              {
+                "author": "agent_stickman",
+                "content": {
+                  "parts": [
+                    {
+                      "function_call": {
+                        "id": "call_1265563",
+                        "args": {
+                          "starting_scene": "Sunny outdoor playground with a sandbox, slide, and colorful toy truck",
+                          "num_panels": 3,
+                          "characters": [
+                            "Stick-Sam",
+                            "Stick-Tim"
+                          ],
+                          "story_type": "moral science"
+                        },
+                        "name": "generate_storyboard_script"
+                      }
+                    }
+                  ],
+                  "role": "model"
+                }
+              },
+              {
+                "author": "agent_stickman",
+                "content": {
+                  "parts": [
+                    {
+                      "function_response": {
+                        "id": "call_1265563",
+                        "name": "generate_storyboard_script",
+                        "response": {
+                          "status": "success",
+                          "clip_title": "Moral science Clip featuring Stick-Sam, Stick-Tim",
+                          "story_type": "moral science",
+                          "starting_scene": "Sunny outdoor playground with a sandbox, slide, and colorful toy truck",
+                          "characters": [
+                            "Stick-Sam",
+                            "Stick-Tim"
+                          ],
+                          "total_panels": 3,
+                          "script_outline": [
+                            {
+                              "panel_number": 1,
+                              "scene_title": "Panel 1: Establishing Shot — Sunny outdoor playground with ...",
+                              "camera_framing": "Wide Shot",
+                              "action_description": "Introduction of Stick-Sam, Stick-Tim in Sunny outdoor playground with a sandbox, slide, and colorful toy truck. Poses are established.",
+                              "recommended_pacing_sec": 3.5
+                            },
+                            {
+                              "panel_number": 2,
+                              "scene_title": "Panel 2: Escalation & Action",
+                              "camera_framing": "Medium Close-Up Shot",
+                              "action_description": "Conflict builds between Stick-Sam, Stick-Tim. Dynamic motion and stickman martial/action poses.",
+                              "recommended_pacing_sec": 3.5
+                            },
+                            {
+                              "panel_number": 3,
+                              "scene_title": "Panel 3: Climax / Resolution",
+                              "camera_framing": "Dynamic Low-Angle Shot",
+                              "action_description": "Final action climax for Stick-Sam, Stick-Tim. Lesson or conclusion of the moral science narrative.",
+                              "recommended_pacing_sec": 3.5
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ],
+                  "role": "user"
+                }
+              },
+              {
+                "author": "agent_stickman",
+                "content": {
+                  "parts": [
+                    {
+                      "function_call": {
+                        "id": "call_1172952",
+                        "args": {
+                          "stickman_poses": [
+                            {
+                              "character": "Stick-Sam",
+                              "pose": "clutching toy truck tightly to chest, turning away"
+                            },
+                            {
+                              "character": "Stick-Tim",
+                              "pose": "reaching forward with open palm, sad tilted head"
+                            }
+                          ],
+                          "action_description": "Stick-Sam holds a toy truck tightly in the sandbox while Stick-Tim approaches with open arms, asking to play together.",
+                          "panel_number": 1,
+                          "scene_title": "Panel 1: The Greedy Playtime",
+                          "visual_prompt": "Minimalist black stickman figures on a vibrant playground background. Stick-Sam clutches a bright red toy truck selfishly in the sandbox. Stick-Tim reaches out friendly, asking to share. Clean stick-figure aesthetic with clear emotional poses."
+                        },
+                        "name": "render_stickman_panel"
+                      }
+                    },
+                    {
+                      "function_call": {
+                        "id": "call_1172953",
+                        "args": {
+                          "scene_title": "Panel 2: The Lonely Realization",
+                          "panel_number": 2,
+                          "stickman_poses": [
+                            {
+                              "pose": "slumped shoulders sitting alone with toy",
+                              "character": "Stick-Sam"
+                            },
+                            {
+                              "character": "Stick-Tim",
+                              "pose": "joyful hands-up pose next to a fun sandcastle"
+                            }
+                          ],
+                          "visual_prompt": "Minimalist stick figure scene. Stick-Sam sits isolated with his toy truck looking down in regret. Stick-Tim is cheering proudly next to a sandcastle. Split focus showing contrast between greed and shared fun.",
+                          "action_description": "Stick-Sam plays alone with the toy truck, looking bored, while Stick-Tim builds a fun sandcastle nearby. Stick-Sam realizes playing alone is boring."
+                        },
+                        "name": "render_stickman_panel"
+                      }
+                    },
+                    {
+                      "function_call": {
+                        "id": "call_1172954",
+                        "args": {
+                          "visual_prompt": "Heartwarming stickman story conclusion. Stick-Sam hands the toy truck over to Stick-Tim at the sandcastle. Both stick figures have celebratory high-five arm poses, cheerful motion lines, sunny playground setting.",
+                          "scene_title": "Panel 3: Sharing Brings Joy",
+                          "stickman_poses": [
+                            {
+                              "character": "Stick-Sam",
+                              "pose": "extending hands offering toy truck with happy upright posture"
+                            },
+                            {
+                              "character": "Stick-Tim",
+                              "pose": "cheering high-five stance accepting toy"
+                            }
+                          ],
+                          "panel_number": 3,
+                          "action_description": "Stick-Sam offers the toy truck to Stick-Tim, and together they drive the truck up the sandcastle ramp in joy. Sharing is caring!"
+                        },
+                        "name": "render_stickman_panel"
+                      }
+                    },
+                    {
+                      "function_call": {
+                        "id": "call_1172955",
+                        "args": {
+                          "pacing": "normal",
+                          "num_panels": 3
+                        },
+                        "name": "calculate_clip_duration"
+                      }
+                    }
+                  ],
+                  "role": "model"
+                }
+              },
+              {
+                "author": "agent_stickman",
+                "content": {
+                  "parts": [
+                    {
+                      "function_response": {
+                        "id": "call_1172952",
+                        "name": "render_stickman_panel",
+                        "response": {
+                          "status": "rendered",
+                          "panel_number": 1,
+                          "scene_title": "Panel 1: The Greedy Playtime",
+                          "action_description": "Stick-Sam holds a toy truck tightly in the sandbox while Stick-Tim approaches with open arms, asking to play together.",
+                          "stickman_poses": [
+                            {
+                              "character": "Stick-Sam",
+                              "pose": "clutching toy truck tightly to chest, turning away"
+                            },
+                            {
+                              "character": "Stick-Tim",
+                              "pose": "reaching forward with open palm, sad tilted head"
+                            }
+                          ],
+                          "visual_prompt": "Minimalist black stickman figures on a vibrant playground background. Stick-Sam clutches a bright red toy truck selfishly in the sandbox. Stick-Tim reaches out friendly, asking to share. Clean stick-figure aesthetic with clear emotional poses.",
+                          "render_style": "2D Minimalist Stickman Action Vector Art, High Contrast, Dynamic Speed Lines"
+                        }
+                      }
+                    },
+                    {
+                      "function_response": {
+                        "id": "call_1172953",
+                        "name": "render_stickman_panel",
+                        "response": {
+                          "status": "rendered",
+                          "panel_number": 2,
+                          "scene_title": "Panel 2: The Lonely Realization",
+                          "action_description": "Stick-Sam plays alone with the toy truck, looking bored, while Stick-Tim builds a fun sandcastle nearby. Stick-Sam realizes playing alone is boring.",
+                          "stickman_poses": [
+                            {
+                              "pose": "slumped shoulders sitting alone with toy",
+                              "character": "Stick-Sam"
+                            },
+                            {
+                              "character": "Stick-Tim",
+                              "pose": "joyful hands-up pose next to a fun sandcastle"
+                            }
+                          ],
+                          "visual_prompt": "Minimalist stick figure scene. Stick-Sam sits isolated with his toy truck looking down in regret. Stick-Tim is cheering proudly next to a sandcastle. Split focus showing contrast between greed and shared fun.",
+                          "render_style": "2D Minimalist Stickman Action Vector Art, High Contrast, Dynamic Speed Lines"
+                        }
+                      }
+                    },
+                    {
+                      "function_response": {
+                        "id": "call_1172954",
+                        "name": "render_stickman_panel",
+                        "response": {
+                          "status": "rendered",
+                          "panel_number": 3,
+                          "scene_title": "Panel 3: Sharing Brings Joy",
+                          "action_description": "Stick-Sam offers the toy truck to Stick-Tim, and together they drive the truck up the sandcastle ramp in joy. Sharing is caring!",
+                          "stickman_poses": [
+                            {
+                              "character": "Stick-Sam",
+                              "pose": "extending hands offering toy truck with happy upright posture"
+                            },
+                            {
+                              "character": "Stick-Tim",
+                              "pose": "cheering high-five stance accepting toy"
+                            }
+                          ],
+                          "visual_prompt": "Heartwarming stickman story conclusion. Stick-Sam hands the toy truck over to Stick-Tim at the sandcastle. Both stick figures have celebratory high-five arm poses, cheerful motion lines, sunny playground setting.",
+                          "render_style": "2D Minimalist Stickman Action Vector Art, High Contrast, Dynamic Speed Lines"
+                        }
+                      }
+                    },
+                    {
+                      "function_response": {
+                        "id": "call_1172955",
+                        "name": "calculate_clip_duration",
+                        "response": {
+                          "num_panels": 3,
+                          "pacing": "normal",
+                          "sec_per_panel": 3.5,
+                          "total_duration_seconds": 10.5,
+                          "total_frames_24fps": 252,
+                          "total_frames_30fps": 315
+                        }
+                      }
+                    }
+                  ],
+                  "role": "user"
+                }
+              },
+              {
+                "author": "agent_stickman",
+                "content": {
+                  "parts": [
+                    {
+                      "text": "# 🎨 Animated Stickman Storyboard Script\n\n**Clip Title:** *The Power of Sharing*  \n**Genre:** Moral Science / Animated Short  \n**Characters:** Stick-Sam & Stick-Tim  \n**Setting:** Sunny Outdoor Playground (Sandbox & Slide)  \n**Total Duration:** 10.5 Seconds (252 frames @ 24 fps / 315 frames @ 30 fps)  \n**Pacing:** Normal (3.5s per panel)\n\n---\n\n## 🎬 Storyboard Panels Breakdown\n\n### 📍 Panel 1: The Greedy Playtime\n* **Camera Shot:** Wide Shot  \n* **Timing:** 0.0s – 3.5s (84 frames @ 24fps)  \n* **Action Description:** Stick-Sam holds a bright red toy truck tightly in the sandbox while Stick-Tim approaches with open arms, kindly asking to play together. Stick-Sam turns away, keeping the toy to himself.  \n* **Stickman Character Poses:**\n  * **Stick-Sam:** Clutching toy truck tightly to chest, torso turned away defensively.\n  * **Stick-Tim:** Reaching forward with open palm, head tilted in a sad/hopeful pose.\n* **Visual Prompt:**\n  > *\"Minimalist black stickman figures on a vibrant playground background. Stick-Sam clutches a bright red toy truck selfishly in the sandbox. Stick-Tim reaches out friendly, asking to share. Clean stick-figure aesthetic with clear emotional poses.\"*\n\n---\n\n### 📍 Panel 2: The Lonely Realization\n* **Camera Shot:** Medium Close-Up Shot / Split Focus  \n* **Timing:** 3.5s – 7.0s (84 frames @ 24fps)  \n* **Action Description:** Stick-Sam plays alone with the toy truck, slump-shouldered and bored. Meanwhile, Stick-Tim builds an awesome sandcastle nearby by himself. Stick-Sam realizes playing alone isn't as fun as playing together.  \n* **Stickman Character Poses:**\n  * **Stick-Sam:** Slumped shoulders, sitting isolated, looking down in regret.\n  * **Stick-Tim:** Joyful hands-up victory pose next to a fun sandcastle.\n* **Visual Prompt:**\n  > *\"Minimalist stick figure scene. Stick-Sam sits isolated with his toy truck looking down in regret. Stick-Tim is cheering proudly next to a sandcastle. Split focus showing contrast between greed and shared fun.\"*\n\n---\n\n### 📍 Panel 3: Sharing Brings Joy (Climax & Moral)\n* **Camera Shot:** Dynamic Low-Angle Shot  \n* **Timing:** 7.0s – 10.5s (84 frames @ 24fps)  \n* **Action Description:** Stick-Sam walks over and offers the toy truck to Stick-Tim. Together, they cheer and drive the truck up the sandcastle ramp!  \n* **Stickman Character Poses:**\n  * **Stick-Sam:** Extending arms forward, offering the toy truck with happy upright posture.\n  * **Stick-Tim:** Cheering high-five stance, accepting the toy with joy.\n* **Visual Prompt:**\n  > *\"Heartwarming stickman story conclusion. Stick-Sam hands the toy truck over to Stick-Tim at the sandcastle. Both stick figures have celebratory high-five arm poses, cheerful motion lines, sunny playground setting.\"*\n\n---\n\n## ⏱️ Clip Technical Specifications\n\n| Metric | Specification |\n| :--- | :--- |\n| **Total Panels** | 3 Panels |\n| **Total Clip Duration** | 10.5 Seconds |\n| **Frame Count (24 FPS)** | 252 Frames |\n| **Frame Count (30 FPS)** | 315 Frames |\n| **Pacing Rate** | 3.5 sec/panel (Normal pacing) |\n| **Moral Lesson** | *Sharing brings more happiness than keeping things to yourself!* |"
+                    }
+                  ],
+                  "role": "model"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
