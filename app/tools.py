@@ -205,74 +205,85 @@ function drawStickman(x, y, scale, headColor, bodyColor, pose, label) {{
 
   // Label
   ctx.fillStyle = "#94a3b8";
-  ctx.font = "12px sans-serif";
+  ctx.font = "bold 13px sans-serif";
   ctx.textAlign = "center";
   ctx.fillText(label, 0, -55);
 
-  ctx.lineWidth = 3;
+  ctx.lineWidth = 4;
   ctx.strokeStyle = bodyColor;
   ctx.lineCap = "round";
 
   // Head
   ctx.beginPath();
-  ctx.arc(0, -35, 10, 0, Math.PI * 2);
+  ctx.arc(0, -35, 12, 0, Math.PI * 2);
   ctx.fillStyle = headColor;
   ctx.fill();
   ctx.stroke();
 
   // Body
   ctx.beginPath();
-  ctx.moveTo(0, -25);
-  ctx.lineTo(0, 5);
+  ctx.moveTo(0, -23);
+  ctx.lineTo(0, 10);
   ctx.stroke();
 
-  const cycle = Math.sin(t * 0.1);
+  const cycle = Math.sin(t * 0.15);
 
-  if (pose === "walk") {{
+  if (pose === "kick") {{
     // Arms
     ctx.beginPath();
-    ctx.moveTo(0, -20); ctx.lineTo(-12 * cycle, -5);
-    ctx.moveTo(0, -20); ctx.lineTo(12 * cycle, -5);
+    ctx.moveTo(0, -18); ctx.lineTo(-18, -30);
+    ctx.moveTo(0, -18); ctx.lineTo(18, -10);
     ctx.stroke();
+    // Legs: High kick
+    ctx.beginPath();
+    ctx.moveTo(0, 10); ctx.lineTo(-12, 35);
+    ctx.moveTo(0, 10); ctx.lineTo(30, -15);
+    ctx.stroke();
+  }} else if (pose === "slash") {{
+    // Arms swinging weapon / slash
+    ctx.beginPath();
+    ctx.moveTo(0, -18); ctx.lineTo(25, -25);
+    ctx.moveTo(0, -18); ctx.lineTo(15, 0);
+    ctx.stroke();
+    // Glowing weapon arc
+    ctx.strokeStyle = headColor;
+    ctx.lineWidth = 5;
+    ctx.beginPath(); ctx.moveTo(25, -25); ctx.lineTo(45, -35); ctx.stroke();
+    ctx.lineWidth = 4;
+    ctx.strokeStyle = bodyColor;
     // Legs
     ctx.beginPath();
-    ctx.moveTo(0, 5); ctx.lineTo(12 * cycle, 25);
-    ctx.moveTo(0, 5); ctx.lineTo(-12 * cycle, 25);
+    ctx.moveTo(0, 10); ctx.lineTo(-18, 35);
+    ctx.moveTo(0, 10); ctx.lineTo(18, 35);
     ctx.stroke();
-  }} else if (pose === "kick") {{
-    // Arms
+  }} else if (pose === "walk" || pose === "run") {{
+    // Walking/Running motion
     ctx.beginPath();
-    ctx.moveTo(0, -20); ctx.lineTo(-15, -30);
-    ctx.moveTo(0, -20); ctx.lineTo(15, -10);
-    ctx.stroke();
-    // Legs
-    ctx.beginPath();
-    ctx.moveTo(0, 5); ctx.lineTo(-10, 25);
-    ctx.moveTo(0, 5); ctx.lineTo(25, -10); // High Kick
-    ctx.stroke();
-  }} else if (pose === "share") {{
-    // Arms
-    ctx.beginPath();
-    ctx.moveTo(0, -20); ctx.lineTo(15, -15);
-    ctx.moveTo(0, -20); ctx.lineTo(-10, 0);
-    ctx.stroke();
-    // Legs
-    ctx.beginPath();
-    ctx.moveTo(0, 5); ctx.lineTo(-8, 25);
-    ctx.moveTo(0, 5); ctx.lineTo(8, 25);
-    ctx.stroke();
-
-    // Gift / Item
-    ctx.fillStyle = "#ef4444";
-    ctx.beginPath(); ctx.arc(18, -15, 5, 0, Math.PI*2); ctx.fill();
-  }} else {{ // Default idle
-    ctx.beginPath();
-    ctx.moveTo(0, -20); ctx.lineTo(-10, 0);
-    ctx.moveTo(0, -20); ctx.lineTo(10, 0);
+    ctx.moveTo(0, -18); ctx.lineTo(-15 * cycle, 0);
+    ctx.moveTo(0, -18); ctx.lineTo(15 * cycle, 0);
     ctx.stroke();
     ctx.beginPath();
-    ctx.moveTo(0, 5); ctx.lineTo(-10, 25);
-    ctx.moveTo(0, 5); ctx.lineTo(10, 25);
+    ctx.moveTo(0, 10); ctx.lineTo(18 * cycle, 35);
+    ctx.moveTo(0, 10); ctx.lineTo(-18 * cycle, 35);
+    ctx.stroke();
+  }} else if (pose === "victory") {{
+    // Both arms in air
+    ctx.beginPath();
+    ctx.moveTo(0, -18); ctx.lineTo(-20, -45);
+    ctx.moveTo(0, -18); ctx.lineTo(20, -45);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(0, 10); ctx.lineTo(-12, 35);
+    ctx.moveTo(0, 10); ctx.lineTo(12, 35);
+    ctx.stroke();
+  }} else {{ // Idle / Guard
+    ctx.beginPath();
+    ctx.moveTo(0, -18); ctx.lineTo(-14, 0);
+    ctx.moveTo(0, -18); ctx.lineTo(14, 0);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(0, 10); ctx.lineTo(-12, 35);
+    ctx.moveTo(0, 10); ctx.lineTo(12, 35);
     ctx.stroke();
   }}
 
@@ -286,7 +297,7 @@ function render() {{
   ctx.fillStyle = "#1e293b";
   ctx.fillRect(0, 260, canvas.width, 60); // Floor
   ctx.strokeStyle = "#334155";
-  ctx.lineWidth = 1;
+  ctx.lineWidth = 2;
   for(let x=0; x<canvas.width; x+=40) {{
     ctx.beginPath(); ctx.moveTo(x, 260); ctx.lineTo(x, 320); ctx.stroke();
   }}
@@ -294,18 +305,24 @@ function render() {{
   const scene = panels[currentScene] || {{ scene_title: "Panel " + (currentScene+1), action_description: "Stickman scene action" }};
   document.getElementById('sceneInfo').innerHTML = "<strong>" + (scene.scene_title || "Scene " + (currentScene+1)) + "</strong><br>" + (scene.action_description || "");
 
-  // Animate character positions based on scene
-  if (currentScene === 0) {{
-    const posX1 = 150 + Math.sin(t * 0.05) * 20;
-    drawStickman(posX1, 230, 1.2, "#38bdf8", "#f8fafc", "walk", "{char1}");
-    drawStickman(420, 230, 1.2, "#f43f5e", "#f8fafc", "idle", "{char2}");
-  }} else if (currentScene === 1) {{
-    const jumpY = Math.abs(Math.sin(t * 0.1)) * 30;
-    drawStickman(220, 230 - jumpY, 1.2, "#38bdf8", "#38bdf8", "kick", "{char1}");
-    drawStickman(360, 230, 1.2, "#f43f5e", "#f8fafc", "idle", "{char2}");
+  const slide = Math.sin(t * 0.05) * 30;
+  const bounce = Math.abs(Math.sin(t * 0.12)) * 25;
+
+  // Alternate dynamic positions for any panel number (Panel 1, 2, 3, 4, 5, 6...)
+  const panelMode = currentScene % 4;
+
+  if (panelMode === 0) {{
+    drawStickman(160 + slide, 230, 1.2, "#38bdf8", "#ffffff", "walk", "{char1}");
+    drawStickman(420 - slide, 230, 1.2, "#f43f5e", "#ffffff", "idle", "{char2}");
+  }} else if (panelMode === 1) {{
+    drawStickman(230, 230 - bounce, 1.2, "#38bdf8", "#38bdf8", "kick", "{char1}");
+    drawStickman(370, 230, 1.2, "#f43f5e", "#ffffff", "slash", "{char2}");
+  }} else if (panelMode === 2) {{
+    drawStickman(220 + slide, 230, 1.2, "#38bdf8", "#ffffff", "slash", "{char1}");
+    drawStickman(380 - slide, 230 - bounce, 1.2, "#f43f5e", "#f43f5e", "kick", "{char2}");
   }} else {{
-    drawStickman(250, 230, 1.2, "#38bdf8", "#f8fafc", "share", "{char1}");
-    drawStickman(330, 230, 1.2, "#f43f5e", "#f8fafc", "share", "{char2}");
+    drawStickman(230, 230, 1.2, "#38bdf8", "#ffffff", "victory", "{char1}");
+    drawStickman(370, 230, 1.2, "#f43f5e", "#ffffff", "idle", "{char2}");
   }}
 
   if (isPlaying) {{
