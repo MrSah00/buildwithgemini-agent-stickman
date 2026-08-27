@@ -15,6 +15,7 @@
 """Tools for Agent_StickMan - Stickman Storyboard Creator Agent."""
 
 import json
+import os
 from typing import Any, Dict, List
 
 
@@ -136,6 +137,7 @@ def generate_html_animation_player(
     characters: List[str],
     story_type: str,
     panels_data: List[Dict[str, Any]],
+    output_filename: str = "stickman_storyboard.html",
 ) -> Dict[str, Any]:
     """Generate a self-contained HTML/JS Canvas interactive animation player for the stickman clip.
 
@@ -144,9 +146,10 @@ def generate_html_animation_player(
         characters: List of character names.
         story_type: Genre or theme.
         panels_data: List of panel details with scene_title, action_description, and poses.
+        output_filename: Filename for the saved HTML storyboard file.
 
     Returns:
-        A dictionary containing the complete HTML animation player string.
+        A dictionary containing the complete HTML animation player string and saved path.
     """
     char1 = characters[0] if len(characters) > 0 else "Stick-Bob"
     char2 = characters[1] if len(characters) > 1 else "Stick-Tim"
@@ -343,8 +346,21 @@ render();
 </body>
 </html>"""
 
+    # Save to disk locally if directory exists
+    target_path = output_filename
+    try:
+        base_dir = os.path.dirname(__file__)
+        static_dir = os.path.join(base_dir, "..", "frontend", "static")
+        if os.path.exists(static_dir):
+            target_path = os.path.join(static_dir, output_filename)
+        with open(target_path, "w", encoding="utf-8") as f:
+            f.write(html_code)
+    except Exception:
+        pass
+
     return {
         "status": "generated",
         "clip_title": clip_title,
+        "filename": output_filename,
         "html_code": html_code,
     }

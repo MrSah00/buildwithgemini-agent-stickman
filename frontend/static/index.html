@@ -29,12 +29,14 @@
   .a2text.a2-h1 { font-size:1.5rem; font-weight:700; }
   .a2text.a2-h2 { font-size:1.25rem; font-weight:700; }
   .a2text.a2-h3 { font-size:1.1rem; font-weight:600; }
-  .a2text.a2-h4 { font-size:1rem; font-weight:600; }
+  .a2text.a2-h4 { font-size:1.0rem; font-weight:600; }
   .a2text.a2-caption { font-size:.85rem; color:#666; }
   .a2divider { border:none; border-top:1px solid var(--border); margin:.4rem 0; width:100%; }
   .a2img { max-width:100%; border-radius:8px; display:block; }
   .material-symbols-outlined { font-family:'Material Symbols Outlined'; font-size:1.25rem; line-height:1; vertical-align:middle; color:var(--accent); }
-  .html-player { width:100%; height:460px; border:1px solid var(--border); border-radius:10px; margin-top:12px; background:#0f172a; display:block; }
+  .html-player { width:100%; height:460px; border:1px solid var(--border); border-radius:10px; margin-top:8px; background:#0f172a; display:block; }
+  .download-btn { display:inline-flex; align-items:center; gap:6px; background:#10b981; color:#ffffff; padding:10px 16px; border-radius:8px; text-decoration:none; font-weight:600; font-size:0.95rem; margin-top:12px; margin-bottom:4px; box-shadow:0 2px 4px rgba(0,0,0,0.1); transition:background 0.2s; }
+  .download-btn:hover { background:#059669; }
 </style>
 </head>
 <body>
@@ -159,12 +161,21 @@ function renderReply(b, parts) {
     const textNode = el("div", null, textStr);
     b.appendChild(textNode);
 
-    // Look for ```html ... ``` code blocks in textStr and embed them as playable iframes
+    // Look for ```html ... ``` code blocks in textStr and embed them with a Download button
     const htmlRegex = /```html\s*([\s\S]*?)\s*```/i;
     const match = textStr.match(htmlRegex);
     if (match && match[1]) {
+      const htmlContent = match[1];
+      const blob = new Blob([htmlContent], { type: "text/html" });
+      const blobUrl = URL.createObjectURL(blob);
+
+      const dlBtn = el("a", "download-btn", "📥 Download Stickman Storyboard HTML File");
+      dlBtn.href = blobUrl;
+      dlBtn.download = "stickman_storyboard.html";
+      b.appendChild(dlBtn);
+
       const iframe = el("iframe", "html-player");
-      iframe.srcdoc = match[1];
+      iframe.srcdoc = htmlContent;
       b.appendChild(iframe);
     }
   }
